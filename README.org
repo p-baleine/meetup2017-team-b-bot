@@ -1,0 +1,41 @@
+#+TITLE: abesan_bot
+
+* 勝手な想定
+
+  - [[https://docs.google.com/spreadsheets/d/1AuqnYXBsy8dwij7K--kNLHPo9m-EhicVP2gA6nJIawQ/edit#gid=0][このシート]] にシナリオを記載する
+  - プログラムは上記シートを読んで答えるslackのボット
+    - mentorという名前のslackアプリ、他の人も見えるかな？
+  - デモは#m-hogeチャネルにユーザーとボットしかactiveに参加していない想定だと楽かも
+    - 本当はメンションとかにすべきだろうけど…
+    - プログラムとしては、#m-hogeチャネルで自分の発言以外の発言を入力と判断する
+  - デモなので、もしプログラム的に状態を保持したい場合はオンメモリで
+    - 本当はDB用意すべきなんだろうけど
+  - 個人的にwoebotのチュートリアルを真似してみたいけどどうでしょう？
+    - 内のチームのボットだけの特色にはできる気がしている
+    - 後、ボットが0.5sくらいあけて連続でメッセージを送るのもやってみたい
+      - なんかボット感が出て楽しい
+    - やる場合、#m-hogeにinviteされたときのイベントが取れるのでこれを契機としてボット側から発話してチュートリアルに突入
+  - プログラムの話
+  - テキストを面白くしたい(https://api.slack.com/docs/message-formatting)
+
+* 準備
+
+googleの認証情報: https://console.developers.google.com/start/api?id=sheets.googleapis.com
+
+jsonを`client_secret.json`という名前でプロジェクトの直下に保存する。
+
+#+BEGIN_SRC:
+# 必要なパッケージのインストール
+$ pip install -r requirements.txt
+# 起動
+$ SLACK_API_TOKEN=XXX python -m abesan_bot.main
+#+END_SRC
+
+* メモ
+
+  - RTMイベント一覧: https://api.slack.com/rtm#events
+  - slackメッセージのフォーマット: https://api.slack.com/docs/message-formatting
+  - channel一覧: https://api.slack.com/methods/groups.list/test
+  - ボットをleaveさせるにはchannelで =/remove mentor=
+  - ボタンつけたい場合外部のサーバーが必要になる
+    - https://api.slack.com/docs/message-buttons
