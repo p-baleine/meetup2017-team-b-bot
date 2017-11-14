@@ -50,5 +50,5 @@ if __name__ == "__main__":
                 else:
                     print("Unknown event:", event)
             time.sleep(1)
-        else:
-            print("Connection Failed")
+    else:
+        print("Connection Failed")
