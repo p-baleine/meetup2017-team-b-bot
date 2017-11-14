@@ -2,6 +2,7 @@ import os
 import re
 import time
 import pygsheets
+from time import sleep
 
 from slackclient import SlackClient
 
@@ -36,7 +37,7 @@ def send_message(channel, text):
 def send_message_list(channel, text):
     for t in text:
         sc.api_call("chat.postMessage", channel=channel,
-                    text=text )
+                    text=t )
         sleep(0.5)
 
 if __name__ == "__main__":
@@ -54,7 +55,8 @@ if __name__ == "__main__":
                 if is_invited_event(event):
                     print("Invitation event:", event)
                     msg = sequence.next(event)
-                    send_message(event["channel"], msg)
+                    print(msg)
+                    send_message_list(event["channel"], msg)
                 elif is_message_event(event):
                     print("Message event:", event)
                     msg = knowledge.query(event)
