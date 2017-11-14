@@ -12,11 +12,14 @@ sc = SlackClient(slack_token)
 
 SHEET_ID = "1AuqnYXBsy8dwij7K--kNLHPo9m-EhicVP2gA6nJIawQ"
 BOT_ID = "U7ZGBME1H"
+ABE_CHANNEL_ID = "C6GV7G26M"
+SAKAI_CHANNEL_ID = "C73273N5B"
 CHANNEL_ID = "G80LARY5D" # FIXME これは外出しないと複数で開発する時面倒くさい
 
 def is_invited_event(event):
     return ("type" in event and event["type"] == "member_joined_channel"
-            and event["user"] == BOT_ID)
+            and event["user"] == BOT_ID
+            and event["channel"] in [ABE_CHANNEL_ID, SAKAI_CHANNEL_ID])
 
 def is_message_event(event):
     # 面倒くさいのでハードコーディングしたCHANNEL_IDに一致するかだけチェックする
