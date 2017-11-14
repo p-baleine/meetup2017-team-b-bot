@@ -11,6 +11,9 @@ class Sequence(object):
         self._sheet_row_id += 1
         return msgs
 
+    def is_finished(self):
+        return self._sheet_row_id == 4.0
+
     def sub_user_name(self, event, text):
         return re.sub(r'^(.*){{USER}}(.*)$',
                       r'\1<@{}>\2'.format(event["user"]),

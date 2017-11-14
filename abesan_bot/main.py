@@ -17,6 +17,7 @@ BOT_ID = "U7ZGBME1H"
 ABE_CHANNEL_ID = "C6GV7G26M"
 SAKAI_CHANNEL_ID = "C73273N5B"
 CHANNEL_ID = "G80LARY5D" # FIXME これは外出しないと複数で開発する時面倒くさい
+USER_ID = "U0VKPU45A"
 
 def is_invited_event(event):
     return ("type" in event and event["type"] == "member_joined_channel"
@@ -28,7 +29,8 @@ def is_message_event(event):
     # CHANNEL_IDには1人しかユーザーがいない想定
     return ("type" in event and event["type"] == "message"
             and event["channel"] == CHANNEL_ID and "bot_id" not in event
-            and re.match(r"^@abe", event["text"]))
+            and event["user"] == USER_ID)
+#and re.match(r"^@abe", event["text"]))
 
 def send_message(channel, text):
     sc.api_call("chat.postMessage", channel=channel,
@@ -58,9 +60,17 @@ if __name__ == "__main__":
                     print(msg)
                     send_message_list(event["channel"], msg)
                 elif is_message_event(event):
-                    print("Message event:", event)
-                    msg = knowledge.query(event)
-                    send_message(event["channel"], msg)
+                    if not sequence.is_finished():
+                        print("Invitation event 2:", event)
+                        msg = sequence.next(event)
+                        print(msg)
+                        send_message_list(event["channel"], msg)
+                    elif re.match(r"^@あべさん.*", event["text"]):
+                        print("Message event:", event)
+                        msg = knowledge.query(event)
+                        send_message(event["channel"], msg)
+                    else:
+                        print("Message event, not match")
                 else:
                     print("Unknown event:", event)
             time.sleep(1)
