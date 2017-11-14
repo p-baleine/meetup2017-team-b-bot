@@ -19,7 +19,7 @@ CHANNEL_ID = "G80LARY5D" # FIXME これは外出しないと複数で開発す�
 def is_invited_event(event):
     return ("type" in event and event["type"] == "member_joined_channel"
             and event["user"] == BOT_ID
-            and event["channel"] in [ABE_CHANNEL_ID, SAKAI_CHANNEL_ID])
+            and event["channel"] in [ABE_CHANNEL_ID, SAKAI_CHANNEL_ID, CHANNEL_ID])
 
 def is_message_event(event):
     # 面倒くさいのでハードコーディングしたCHANNEL_IDに一致するかだけチェックする
