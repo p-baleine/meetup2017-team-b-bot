@@ -30,7 +30,10 @@ def is_message_event(event):
             and re.match(r"^@abe", event["text"]))
 
 def send_message(channel, text):
-    text = text if text is list else [text]
+    sc.api_call("chat.postMessage", channel=channel,
+                text=text)
+
+def send_message_list(channel, text):
     for t in text:
         sc.api_call("chat.postMessage", channel=channel,
                     text=text )
