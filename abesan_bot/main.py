@@ -30,8 +30,11 @@ def is_message_event(event):
             and re.match(r"^@abe", event["text"]))
 
 def send_message(channel, text):
-    sc.api_call("chat.postMessage", channel=channel,
-                text=text if text is list else [text])
+    text = text if text is list else [text]
+    for t in text:
+        sc.api_call("chat.postMessage", channel=channel,
+                    text=text )
+        sleep(0.5)
 
 if __name__ == "__main__":
     gc = pygsheets.authorize(outh_file='client_secret.json')
