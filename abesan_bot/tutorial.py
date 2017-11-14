@@ -15,6 +15,8 @@ class Sequence(object):
         return self._sheet_row_id == 4.0
 
     def sub_user_name(self, event, text):
+        user = event["inviter"] if "inviter" in event else event["user"]
         return re.sub(r'^(.*){{USER}}(.*)$',
-                      r'\1<@{}>\2'.format(event["user"]),
-                      text)
+                      r'\1<@{}>\2'.format(user),
+                      text,
+                      flags=re.MULTILINE)

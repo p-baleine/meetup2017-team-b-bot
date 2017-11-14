@@ -39,6 +39,11 @@ def send_message(channel, text):
                 icon_url="https://d2v9k5u4v94ulw.cloudfront.net/small_light(dw=300,dh=300,da=l,ds=n,cc=FFFFFF)/assets/images/791065/original/70456c16-4889-4715-aa9a-4f8c56540cde.png?1479369152")
 
 def send_message_list(channel, text):
+    if "ts" in event:
+        sc.api_call("reactions.add",
+                    channel=channel,
+                    name="sparkles",
+                    timestamp=event["ts"])
     for t in text:
         sc.api_call("chat.postMessage", channel=channel,
                     text=t,
