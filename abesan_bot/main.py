@@ -17,7 +17,7 @@ BOT_ID = "U7ZGBME1H"
 ABE_CHANNEL_ID = "C6GV7G26M"
 SAKAI_CHANNEL_ID = "C73273N5B"
 CHANNEL_ID = "G80LARY5D" # FIXME これは外出しないと複数で開発する時面倒くさい
-USER_ID = "U0VKPU45A"
+USER_ID = "U1NNYL94H"
 
 def is_invited_event(event):
     return ("type" in event and event["type"] == "member_joined_channel"
@@ -72,7 +72,8 @@ if __name__ == "__main__":
                     elif re.match(r"^@あべさん.*", event["text"]):
                         print("Message event:", event)
                         msg = knowledge.query(event)
-                        send_message(event["channel"], msg)
+                        if msg:
+                            send_message(event["channel"], msg)
                     else:
                         print("Message event, not match")
                 else:

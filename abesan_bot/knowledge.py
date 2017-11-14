@@ -6,6 +6,9 @@ class Knowledge(object):
         pass
 
     def query(self, event):
+        lst = self._sheet_df[self._sheet_df["Input"].str.contains(re.sub(r"@あべさん (.*)", r"\1", event["text"]), na=False)]["Output"]
+        if lst.size == 0:
+            return False
         return self.sub_user_name(event, self._sheet_df[self._sheet_df["Input"].str.contains(re.sub(r"@あべさん (.*)", r"\1", event["text"]), na=False)]["Output"].iloc[0])
 
     def sub_user_name(self, event, text):
