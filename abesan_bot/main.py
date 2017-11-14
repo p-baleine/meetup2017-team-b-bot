@@ -1,4 +1,5 @@
 import os
+import re
 import time
 import pygsheets
 
@@ -25,10 +26,12 @@ def is_message_event(event):
     # 面倒くさいのでハードコーディングしたCHANNEL_IDに一致するかだけチェックする
     # CHANNEL_IDには1人しかユーザーがいない想定
     return ("type" in event and event["type"] == "message"
-            and event["channel"] == CHANNEL_ID and "bot_id" not in event)
+            and event["channel"] == CHANNEL_ID and "bot_id" not in event
+            and re.match(r"^@abe", event["text"]))
 
 def send_message(channel, text):
-    sc.api_call("chat.postMessage", channel=channel, text=text)
+    sc.api_call("chat.postMessage", channel=channel,
+                text=text if text is list else [text])
 
 if __name__ == "__main__":
     gc = pygsheets.authorize(outh_file='client_secret.json')
